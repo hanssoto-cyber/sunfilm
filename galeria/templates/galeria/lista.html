@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block title %}Galería de trabajos | SUNFILM{% endblock %}
+{% block description %}Mirá trabajos reales de SUNFILM: polarizado automotriz, control solar, láminas de seguridad, decorativas y empavonados.{% endblock %}
+
+{% block content %}
+<section class="py-5">
+  <div class="container">
+
+    <div class="text-center mb-5">
+      <h1 class="fw-bold display-5">Nuestros trabajos</h1>
+      <p class="text-body-secondary lead">Trabajos reales, hechos por nosotros.</p>
+    </div>
+
+    <div class="d-flex flex-wrap justify-content-center gap-2 mb-5">
+      <a href="{% url 'galeria:lista' %}"
+         class="btn btn-sm {% if not categoria_activa %}btn-warning{% else %}btn-outline-light{% endif %}">
+        Todos
+      </a>
+      {% for cat in categorias %}
+      <a href="?categoria={{ cat.slug }}"
+         class="btn btn-sm {% if categoria_activa == cat %}btn-warning{% else %}btn-outline-light{% endif %}">
+        <i class="bi {{ cat.icono }} me-1"></i>{{ cat.nombre }}
+      </a>
+      {% endfor %}
+    </div>
+
+    <div class="row g-3">
+      {% for trabajo in trabajos %}
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="galeria-item" data-bs-toggle="modal" data-bs-target="#modalTrabajo{{ trabajo.pk }}">
+          <img src="{{ trabajo.imagen.url }}" alt="{{ trabajo.texto_alt }}"
+               class="img-fluid rounded-3 w-100" loading="lazy">
+          <div class="galeria-overlay rounded-3">
+            <i class="bi bi-zoom-in fs-3 mb-1"></i>
+            <span class="small fw-semibold text-center px-2">{{ trabajo.titulo }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="modalTrabajo{{ trabajo.pk }}" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content bg-dark border-secondary-subtle">
+            <div class="modal-header border-secondary-subtle">
+              <h5 class="modal-title fw-bold">{{ trabajo.titulo }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <img src="{{ trabajo.imagen.url }}" alt="{{ trabajo.texto_alt }}"
+                   class="img-fluid rounded-3 mb-3 w-100">
+              {% if trabajo.servicio %}
+              <a href="{{ trabajo.servicio.get_absolute_url }}" class="badge text-bg-primary text-decoration-none mb-2">
+                {{ trabajo.servicio.nombre }}
+              </a>
+              {% endif %}
+              {% if trabajo.descripcion %}
+              <p class="text-body-secondary">{{ trabajo.descripcion }}</p>
+              {% endif %}
+              <ul class="list-unstyled small text-body-secondary mb-0">
+                {% if trabajo.ubicacion %}
+                <li><i class="bi bi-geo-alt-fill me-2 text-warning"></i>{{ trabajo.ubicacion }}</li>
+                {% endif %}
+                {% if trabajo.fecha_trabajo %}
+                <li><i class="bi bi-calendar-event me-2 text-warning"></i>{{ trabajo.fecha_trabajo|date:"F Y" }}</li>
+                {% endif %}
+              </ul>
+            </div>
+            <div class="modal-footer border-secondary-subtle">
+              <a href="{% url 'core:cotizar' %}{% if trabajo.servicio %}?servicio={{ trabajo.servicio.pk }}{% endif %}"
+                 class="btn btn-warning fw-semibold">
+                Quiero algo así
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% empty %}
+      <div class="col-12">
+        <div class="alert alert-secondary text-center py-5">
+          <i class="bi bi-images display-4 d-block mb-3"></i>
+          Todavía no hay trabajos publicados en esta categoría.
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% if page_obj.has_other_pages %}
+    <nav class="mt-5">
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link bg-dark border-secondary-subtle"
+             href="?page={{ page_obj.previous_page_number }}{% if categoria_activa %}&categoria={{ categoria_activa.slug }}{% endif %}">
+            <i class="bi bi-chevron-left"></i>
+          </a>
+        </li>
+        {% endif %}
+
+        <li class="page-item disabled">
+          <span class="page-link bg-dark border-secondary-subtle">
+            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+          </span>
+        </li>
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link bg-dark border-secondary-subtle"
+             href="?page={{ page_obj.next_page_number }}{% if categoria_activa %}&categoria={{ categoria_activa.slug }}{% endif %}">
+            <i class="bi bi-chevron-right"></i>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+
+    <div class="text-center mt-5">
+      <p class="text-body-secondary">¿Querés un trabajo así en tu auto, casa u oficina?</p>
+      <a href="{% url 'core:cotizar' %}" class="btn btn-warning btn-lg fw-semibold">Cotizar gratis</a>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

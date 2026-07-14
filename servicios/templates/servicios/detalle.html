@@ -46,6 +46,9 @@
           <div class="card-body text-center">
             <h5 class="fw-bold">¿Te interesa este servicio?</h5>
             <p class="small text-body-secondary">Cotización sin costo y sin compromiso.</p>
+            <a href="{% url 'core:cotizar' %}?servicio={{ servicio.pk }}" class="btn btn-warning w-100 mb-2 fw-semibold">
+                <i class="bi bi-file-earmark-text me-1"></i> Cotizar este servicio
+            </a>
             <a href="https://wa.me/56950978799?text=Hola%20SUNFILM,%20quiero%20cotizar%20{{ servicio.nombre|urlencode }}"
                target="_blank" rel="noopener" class="btn btn-success w-100 mb-2">
               <i class="bi bi-whatsapp me-1"></i> Cotizar por WhatsApp

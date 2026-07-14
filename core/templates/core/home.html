@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}SUNFILM | Polarizados, Seguridad y Control Solar{% endblock %}
+{% block description %}Instaladores certificados de láminas de seguridad, control solar, decorativas, anti grafiti y polarizado automotriz. Cotización gratis.{% endblock %}
+
+{% block content %}
+
+<section class="hero-sunfilm d-flex align-items-center">
+  <div class="container py-5">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-7">
+        <span class="badge text-bg-warning mb-3">
+          <i class="bi bi-patch-check-fill me-1"></i> Instaladores certificados
+        </span>
+        <h1 class="display-3 fw-bold mb-3">Polarizados</h1>
+        <p class="fs-3 text-body-secondary mb-4">Seguridad y control solar</p>
+        <p class="lead mb-4">
+          Protegé tu auto, tu casa o tu empresa con láminas de alta calidad.
+          Menos calor, más privacidad y protección real contra impactos.
+        </p>
+        <div class="d-flex flex-wrap gap-2">
+          <a href="{% url 'core:cotizar' %}" class="btn btn-warning btn-lg fw-semibold">
+            Cotizar gratis <i class="bi bi-arrow-right ms-1"></i>
+          </a>
+          <a href="https://wa.me/56950978799" target="_blank" rel="noopener"
+             class="btn btn-success btn-lg">
+            <i class="bi bi-whatsapp me-1"></i> WhatsApp
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-5 text-center d-none d-lg-block">
+        <img src="{% static 'img/logo.png' %}" alt="SUNFILM" class="img-fluid" style="max-height: 320px;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 border-top border-secondary-subtle">
+  <div class="container">
+    <div class="row g-4 text-center">
+      {% for cat in categorias %}
+      <div class="col-md-4">
+        <a href="{% url 'servicios:lista' %}?categoria={{ cat.slug }}" class="text-decoration-none">
+          <div class="card bg-dark border-secondary-subtle h-100 card-hover">
+            <div class="card-body py-4">
+              <i class="bi {{ cat.icono }} display-4 text-warning mb-3 d-block"></i>
+              <h5 class="fw-bold text-body-emphasis">{{ cat.nombre }}</h5>
+              <p class="small text-body-secondary mb-0">{{ cat.descripcion }}</p>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold">Servicios destacados</h2>
+      <p class="text-body-secondary">Lo que más nos piden nuestros clientes.</p>
+    </div>
+    <div class="row g-4">
+      {% for servicio in destacados %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 bg-dark border-secondary-subtle">
+          {% if servicio.imagen %}
+          <img src="{{ servicio.imagen.url }}" class="card-img-top object-fit-cover"
+               style="height:190px;" alt="{{ servicio.nombre }}">
+          {% else %}
+          <div class="card-img-top d-flex align-items-center justify-content-center bg-secondary-subtle"
+               style="height:190px;">
+            <i class="bi {{ servicio.categoria.icono }} display-3 text-body-secondary"></i>
+          </div>
+          {% endif %}
+          <div class="card-body d-flex flex-column">
+            <span class="badge text-bg-primary align-self-start mb-2">{{ servicio.categoria.nombre }}</span>
+            <h5 class="fw-bold">{{ servicio.nombre }}</h5>
+            <p class="small text-body-secondary flex-grow-1">{{ servicio.descripcion_corta }}</p>
+            <a href="{{ servicio.get_absolute_url }}" class="btn btn-outline-warning btn-sm mt-2">Ver más</a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12">
+        <div class="alert alert-secondary text-center">
+          No hay servicios destacados. Marcá algunos como "destacado" en el admin.
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-4">
+      <a href="{% url 'servicios:lista' %}" class="btn btn-outline-light">Ver todos los servicios</a>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 bg-body-tertiary">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold">¿Por qué elegir SUNFILM?</h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3 text-center">
+        <i class="bi bi-patch-check-fill display-5 text-warning mb-3 d-block"></i>
+        <h6 class="fw-bold">Instaladores certificados</h6>
+        <p class="small text-body-secondary">Trabajo prolijo y garantizado, sin burbujas ni despegues.</p>
+      </div>
+      <div class="col-md-6 col-lg-3 text-center">
+        <i class="bi bi-gem display-5 text-warning mb-3 d-block"></i>
+        <h6 class="fw-bold">Materiales de calidad</h6>
+        <p class="small text-body-secondary">Láminas de marcas reconocidas, no genéricas.</p>
+      </div>
+      <div class="col-md-6 col-lg-3 text-center">
+        <i class="bi bi-house-gear-fill display-5 text-warning mb-3 d-block"></i>
+        <h6 class="fw-bold">Vamos a tu domicilio</h6>
+        <p class="small text-body-secondary">Instalamos en tu casa, oficina o local comercial.</p>
+      </div>
+      <div class="col-md-6 col-lg-3 text-center">
+        <i class="bi bi-cash-coin display-5 text-warning mb-3 d-block"></i>
+        <h6 class="fw-bold">Cotización sin costo</h6>
+        <p class="small text-body-secondary">Evaluamos tu caso y te damos un precio claro, sin compromiso.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% if trabajos %}
+<section class="py-5 border-top border-secondary-subtle">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold">Trabajos recientes</h2>
+      <p class="text-body-secondary">Resultados reales de nuestros clientes.</p>
+    </div>
+    <div class="row g-3">
+      {% for trabajo in trabajos %}
+      <div class="col-6 col-md-3">
+        <a href="{% url 'galeria:lista' %}" class="d-block galeria-item">
+          <img src="{{ trabajo.imagen.url }}" alt="{{ trabajo.texto_alt }}"
+               class="img-fluid rounded-3 w-100" loading="lazy">
+          <div class="galeria-overlay rounded-3">
+            <span class="small fw-semibold text-center px-2">{{ trabajo.titulo }}</span>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-4">
+      <a href="{% url 'galeria:lista' %}" class="btn btn-outline-light">Ver galería completa</a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="py-5">
+  <div class="container">
+    <div class="card border-warning">
+      <div class="card-body text-center py-5">
+        <h2 class="fw-bold mb-2">¿Listo para empezar?</h2>
+        <p class="text-body-secondary mb-4">Contanos qué necesitás y te respondemos a la brevedad.</p>
+        <a href="{% url 'core:cotizar' %}" class="btn btn-warning btn-lg fw-semibold">
+          Solicitar cotización gratis
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

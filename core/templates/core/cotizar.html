@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}Cotizar gratis | SUNFILM{% endblock %}
+{% block description %}Solicitá tu cotización sin costo para polarizado, láminas de seguridad o control solar.{% endblock %}
+
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+
+        <div class="text-center mb-5">
+          <h1 class="fw-bold">Cotizá gratis</h1>
+          <p class="text-body-secondary lead">
+            Completá el formulario y te contactamos. Sin costo ni compromiso.
+          </p>
+        </div>
+
+        <div class="card bg-dark border-secondary-subtle">
+          <div class="card-body p-4">
+            <form method="post" novalidate>
+              {% csrf_token %}
+              {{ form.website }}
+
+              {% if form.non_field_errors %}
+              <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+              {% endif %}
+
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="{{ form.nombre.id_for_label }}" class="form-label">
+                    {{ form.nombre.label }} <span class="text-danger">*</span>
+                  </label>
+                  {{ form.nombre }}
+                  {% for error in form.nombre.errors %}
+                  <div class="text-danger small mt-1">{{ error }}</div>
+                  {% endfor %}
+                </div>
+
+                <div class="col-md-6">
+                  <label for="{{ form.telefono.id_for_label }}" class="form-label">
+                    {{ form.telefono.label }} <span class="text-danger">*</span>
+                  </label>
+                  {{ form.telefono }}
+                  {% for error in form.telefono.errors %}
+                  <div class="text-danger small mt-1">{{ error }}</div>
+                  {% endfor %}
+                </div>
+
+                <div class="col-md-6">
+                  <label for="{{ form.email.id_for_label }}" class="form-label">{{ form.email.label }}</label>
+                  {{ form.email }}
+                  {% for error in form.email.errors %}
+                  <div class="text-danger small mt-1">{{ error }}</div>
+                  {% endfor %}
+                </div>
+
+                <div class="col-md-6">
+                  <label for="{{ form.comuna.id_for_label }}" class="form-label">{{ form.comuna.label }}</label>
+                  {{ form.comuna }}
+                </div>
+
+                <div class="col-12">
+                  <label for="{{ form.servicio.id_for_label }}" class="form-label">{{ form.servicio.label }}</label>
+                  {{ form.servicio }}
+                </div>
+
+                <div class="col-12">
+                  <label for="{{ form.mensaje.id_for_label }}" class="form-label">{{ form.mensaje.label }}</label>
+                  {{ form.mensaje }}
+                </div>
+
+                <div class="col-12 d-grid">
+                  <button type="submit" class="btn btn-warning btn-lg fw-semibold">
+                    <i class="bi bi-send-fill me-1"></i> Enviar solicitud
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="text-center mt-4">
+          <p class="text-body-secondary small mb-2">¿Preferís hablar directo?</p>
+          <a href="https://wa.me/56950978799" target="_blank" rel="noopener" class="btn btn-success">
+            <i class="bi bi-whatsapp me-1"></i> WhatsApp
+          </a>
+          <a href="tel:+56950978799" class="btn btn-outline-light">
+            <i class="bi bi-telephone-fill me-1"></i> +56 9 5097 8799
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

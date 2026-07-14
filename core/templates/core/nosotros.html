@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Nosotros | SUNFILM{% endblock %}
+{% block description %}Conocé SUNFILM: instaladores certificados en láminas de seguridad, control solar y polarizado automotriz.{% endblock %}
+
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-9">
+
+        <div class="text-center mb-5">
+          <h1 class="fw-bold">Sobre SUNFILM</h1>
+          <p class="text-body-secondary lead">Seguridad y control solar</p>
+        </div>
+
+        <div class="card bg-dark border-secondary-subtle mb-4">
+          <div class="card-body p-4">
+            <p>
+              En SUNFILM instalamos láminas para vehículos, hogares, oficinas y locales
+              comerciales. Trabajamos tanto el polarizado automotriz como las soluciones
+              arquitectónicas: control solar, láminas de seguridad, decorativas,
+              empavonados y anti grafiti.
+            </p>
+            <p class="mb-0">
+              Somos instaladores certificados. Cada trabajo se evalúa en terreno para
+              recomendar la lámina correcta según tu necesidad real, y no simplemente
+              vender la más cara.
+            </p>
+          </div>
+        </div>
+
+        <div class="row g-4 mb-4">
+          <div class="col-md-6">
+            <div class="card bg-dark border-secondary-subtle h-100">
+              <div class="card-body">
+                <i class="bi bi-bullseye text-warning fs-2 mb-2 d-block"></i>
+                <h5 class="fw-bold">Nuestro compromiso</h5>
+                <p class="small text-body-secondary mb-0">
+                  Instalación prolija, materiales de calidad y un precio claro desde el
+                  principio. Sin sorpresas.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card bg-dark border-secondary-subtle h-100">
+              <div class="card-body">
+                <i class="bi bi-geo-alt-fill text-warning fs-2 mb-2 d-block"></i>
+                <h5 class="fw-bold">Dónde trabajamos</h5>
+                <p class="small text-body-secondary mb-0">
+                  Vamos a tu domicilio, oficina o local. Consultanos por tu comuna.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card border-warning">
+          <div class="card-body text-center py-4">
+            <h4 class="fw-bold mb-3">¿Hablamos?</h4>
+            <a href="{% url 'core:cotizar' %}" class="btn btn-warning fw-semibold">Cotizar gratis</a>
+            <a href="https://wa.me/56950978799" target="_blank" rel="noopener" class="btn btn-success">
+              <i class="bi bi-whatsapp me-1"></i> WhatsApp
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
