@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block title %}Consejos y Tips | SUNFILM{% endblock %}
+{% block description %}Consejos sobre polarizados, láminas de seguridad y control solar: cómo elegir, cuidados, normativa y más.{% endblock %}
+
+{% block content %}
+<section class="py-5">
+  <div class="container">
+
+    <div class="text-center mb-5">
+      <h1 class="fw-bold display-5">Consejos y Tips</h1>
+      <p class="text-body-secondary lead">Todo lo que tenés que saber antes de elegir tu lámina.</p>
+    </div>
+
+    <div class="row justify-content-center mb-4">
+      <div class="col-lg-6">
+        <form method="get" class="d-flex gap-2">
+          <input type="search" name="q" value="{{ busqueda }}" class="form-control"
+                 placeholder="Buscar un tema...">
+          {% if categoria_activa %}
+          <input type="hidden" name="categoria" value="{{ categoria_activa.slug }}">
+          {% endif %}
+          <button class="btn btn-outline-warning" type="submit"><i class="bi bi-search"></i></button>
+        </form>
+      </div>
+    </div>
+
+    <div class="d-flex flex-wrap justify-content-center gap-2 mb-5">
+      <a href="{% url 'blog:lista' %}"
+         class="btn btn-sm {% if not categoria_activa %}btn-warning{% else %}btn-outline-light{% endif %}">
+        Todos
+      </a>
+      {% for cat in categorias %}
+      <a href="?categoria={{ cat.slug }}"
+         class="btn btn-sm {% if categoria_activa == cat %}btn-warning{% else %}btn-outline-light{% endif %}">
+        {{ cat.nombre }}
+      </a>
+      {% endfor %}
+    </div>
+
+    {% if busqueda %}
+    <p class="text-body-secondary text-center mb-4">
+      Resultados para "<strong>{{ busqueda }}</strong>": {{ page_obj.paginator.count }} artículo{{ page_obj.paginator.count|pluralize }}
+    </p>
+    {% endif %}
+
+    <div class="row g-4">
+      {% for post in posts %}
+      <div class="col-md-6 col-lg-4">
+        <article class="card h-100 bg-dark border-secondary-subtle card-hover">
+          <a href="{{ post.get_absolute_url }}">
+            {% if post.imagen %}
+            <img src="{{ post.imagen.url }}" class="card-img-top object-fit-cover"
+                 style="height:190px;" alt="{{ post.texto_alt }}" loading="lazy">
+            {% else %}
+            <div class="card-img-top d-flex align-items-center justify-content-center bg-secondary-subtle"
+                 style="height:190px;">
+              <i class="bi bi-lightbulb display-3 text-body-secondary"></i>
+            </div>
+            {% endif %}
+          </a>
+          <div class="card-body d-flex flex-column">
+            {% if post.categoria %}
+            <span class="badge text-bg-primary align-self-start mb-2">{{ post.categoria.nombre }}</span>
+            {% endif %}
+            <h5 class="fw-bold">
+              <a href="{{ post.get_absolute_url }}" class="text-body-emphasis text-decoration-none">
+                {{ post.titulo }}
+              </a>
+            </h5>
+            <p class="small text-body-secondary flex-grow-1">{{ post.extracto }}</p>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <small class="text-body-secondary">
+                <i class="bi bi-calendar3 me-1"></i>{{ post.publicado|date:"d M Y" }}
+              </small>
+              <a href="{{ post.get_absolute_url }}" class="btn btn-outline-warning btn-sm">Leer</a>
+            </div>
+          </div>
+        </article>
+      </div>
+      {% empty %}
+      <div class="col-12">
+        <div class="alert alert-secondary text-center py-5">
+          <i class="bi bi-journal-text display-4 d-block mb-3"></i>
+          {% if busqueda %}
+            No encontramos artículos para "{{ busqueda }}".
+            <a href="{% url 'blog:lista' %}" class="alert-link">Ver todos</a>
+          {% else %}
+            Todavía no hay artículos publicados.
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% if page_obj.has_other_pages %}
+    <nav class="mt-5">
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link bg-dark border-secondary-subtle"
+             href="?page={{ page_obj.previous_page_number }}{% if categoria_activa %}&categoria={{ categoria_activa.slug }}{% endif %}{% if busqueda %}&q={{ busqueda }}{% endif %}">
+            <i class="bi bi-chevron-left"></i>
+          </a>
+        </li>
+        {% endif %}
+        <li class="page-item disabled">
+          <span class="page-link bg-dark border-secondary-subtle">
+            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+          </span>
+        </li>
+        {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link bg-dark border-secondary-subtle"
+             href="?page={{ page_obj.next_page_number }}{% if categoria_activa %}&categoria={{ categoria_activa.slug }}{% endif %}{% if busqueda %}&q={{ busqueda }}{% endif %}">
+            <i class="bi bi-chevron-right"></i>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+    {% endif %}
+
+  </div>
+</section>
+{% endblock %}

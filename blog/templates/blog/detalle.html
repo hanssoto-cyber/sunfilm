@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.titulo }} | SUNFILM{% endblock %}
+{% block description %}{{ post.extracto }}{% endblock %}
+
+{% block extra_css %}
+<meta property="og:title" content="{{ post.titulo }}">
+<meta property="og:description" content="{{ post.extracto }}">
+<meta property="og:type" content="article">
+{% if post.imagen %}
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ post.imagen.url }}">
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<article class="py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+
+        <nav aria-label="breadcrumb" class="mb-4">
+          <ol class="breadcrumb small">
+            <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="link-body-emphasis">Inicio</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'blog:lista' %}" class="link-body-emphasis">Tips</a></li>
+            <li class="breadcrumb-item active">{{ post.titulo|truncatechars:40 }}</li>
+          </ol>
+        </nav>
+
+        <header class="mb-4">
+          {% if post.categoria %}
+          <a href="{% url 'blog:lista' %}?categoria={{ post.categoria.slug }}"
+             class="badge text-bg-primary text-decoration-none mb-3">{{ post.categoria.nombre }}</a>
+          {% endif %}
+          <h1 class="fw-bold mb-3">{{ post.titulo }}</h1>
+          <p class="lead text-body-secondary">{{ post.extracto }}</p>
+          <div class="d-flex gap-3 small text-body-secondary border-top border-bottom border-secondary-subtle py-2">
+            <span><i class="bi bi-calendar3 me-1"></i>{{ post.publicado|date:"d \d\e F \d\e Y" }}</span>
+            {% if post.autor %}
+            <span><i class="bi bi-person me-1"></i>{{ post.autor.get_full_name|default:post.autor.username }}</span>
+            {% endif %}
+          </div>
+        </header>
+
+        {% if post.imagen %}
+        <img src="{{ post.imagen.url }}" class="img-fluid rounded-3 mb-4 w-100" alt="{{ post.texto_alt }}">
+        {% endif %}
+
+        <div class="post-contenido">{{ post.contenido|linebreaks }}</div>
+
+        {% if post.servicio_relacionado %}
+        <div class="card border-warning my-5">
+          <div class="card-body text-center py-4">
+            <h4 class="fw-bold mb-2">¿Te interesa {{ post.servicio_relacionado.nombre }}?</h4>
+            <p class="text-body-secondary small mb-3">{{ post.servicio_relacionado.descripcion_corta }}</p>
+            <a href="{% url 'core:cotizar' %}?servicio={{ post.servicio_relacionado.pk }}"
+               class="btn btn-warning fw-semibold">Cotizar gratis</a>
+            <a href="{{ post.servicio_relacionado.get_absolute_url }}" class="btn btn-outline-light">
+              Ver el servicio
+            </a>
+          </div>
+        </div>
+        {% else %}
+        <div class="card border-warning my-5">
+          <div class="card-body text-center py-4">
+            <h4 class="fw-bold mb-2">¿Necesitás asesoría?</h4>
+            <p class="text-body-secondary small mb-3">Te ayudamos a elegir la lámina correcta. Sin costo.</p>
+            <a href="{% url 'core:cotizar' %}" class="btn btn-warning fw-semibold">Cotizar gratis</a>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if relacionados %}
+        <hr class="border-secondary-subtle my-4">
+        <h5 class="fw-bold mb-3">Seguí leyendo</h5>
+        <div class="row g-3">
+          {% for rel in relacionados %}
+          <div class="col-md-4">
+            <a href="{{ rel.get_absolute_url }}" class="text-decoration-none">
+              <div class="card bg-dark border-secondary-subtle h-100 card-hover">
+                <div class="card-body">
+                  <h6 class="fw-bold text-body-emphasis mb-1">{{ rel.titulo|truncatechars:55 }}</h6>
+                  <p class="small text-body-secondary mb-0">{{ rel.extracto|truncatechars:70 }}</p>
+                </div>
+              </div>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</article>
+{% endblock %}
