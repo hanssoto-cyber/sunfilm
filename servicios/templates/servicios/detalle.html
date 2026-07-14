@@ -9,7 +9,7 @@
 
     <nav aria-label="breadcrumb" class="mb-4">
       <ol class="breadcrumb small">
-        <li class="breadcrumb-item"><a href="{% url 'home' %}" class="link-body-emphasis">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="link-body-emphasis">Inicio</a></li>
         <li class="breadcrumb-item"><a href="{% url 'servicios:lista' %}" class="link-body-emphasis">Servicios</a></li>
         <li class="breadcrumb-item active">{{ servicio.nombre }}</li>
       </ol>
