@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Servicios | SUNFILM{% endblock %}
+{% block description %}Polarizado automotriz, láminas de seguridad, control solar, decorativas y anti grafiti. Instaladores certificados.{% endblock %}
+
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h1 class="fw-bold display-5">Nuestros Servicios</h1>
+      <p class="text-body-secondary lead">Instaladores certificados en todo tipo de láminas.</p>
+    </div>
+
+    <div class="d-flex flex-wrap justify-content-center gap-2 mb-5">
+      <a href="{% url 'servicios:lista' %}"
+         class="btn btn-sm {% if not categoria_activa %}btn-warning{% else %}btn-outline-light{% endif %}">
+        Todos
+      </a>
+      {% for cat in categorias %}
+      <a href="?categoria={{ cat.slug }}"
+         class="btn btn-sm {% if categoria_activa == cat %}btn-warning{% else %}btn-outline-light{% endif %}">
+        <i class="bi {{ cat.icono }} me-1"></i>{{ cat.nombre }}
+      </a>
+      {% endfor %}
+    </div>
+
+    <div class="row g-4">
+      {% for servicio in servicios %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 bg-dark border-secondary-subtle">
+          {% if servicio.imagen %}
+          <img src="{{ servicio.imagen.url }}" class="card-img-top object-fit-cover"
+               style="height: 200px;" alt="{{ servicio.nombre }}">
+          {% else %}
+          <div class="card-img-top d-flex align-items-center justify-content-center bg-secondary-subtle"
+               style="height: 200px;">
+            <i class="bi {{ servicio.categoria.icono }} display-3 text-body-secondary"></i>
+          </div>
+          {% endif %}
+          <div class="card-body d-flex flex-column">
+            <span class="badge text-bg-primary align-self-start mb-2">{{ servicio.categoria.nombre }}</span>
+            <h5 class="card-title fw-bold">{{ servicio.nombre }}</h5>
+            <p class="card-text text-body-secondary small flex-grow-1">{{ servicio.descripcion_corta }}</p>
+            <a href="{{ servicio.get_absolute_url }}" class="btn btn-outline-warning btn-sm mt-2">
+              Ver detalle <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12">
+        <div class="alert alert-secondary text-center">Aún no hay servicios publicados.</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

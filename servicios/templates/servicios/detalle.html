@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ servicio.nombre }} | SUNFILM{% endblock %}
+{% block description %}{{ servicio.descripcion_corta }}{% endblock %}
+
+{% block content %}
+<section class="py-5">
+  <div class="container">
+
+    <nav aria-label="breadcrumb" class="mb-4">
+      <ol class="breadcrumb small">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}" class="link-body-emphasis">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'servicios:lista' %}" class="link-body-emphasis">Servicios</a></li>
+        <li class="breadcrumb-item active">{{ servicio.nombre }}</li>
+      </ol>
+    </nav>
+
+    <div class="row g-5">
+      <div class="col-lg-7">
+        {% if servicio.imagen %}
+        <img src="{{ servicio.imagen.url }}" class="img-fluid rounded-3 mb-4" alt="{{ servicio.nombre }}">
+        {% endif %}
+        <span class="badge text-bg-primary mb-2">{{ servicio.categoria.nombre }}</span>
+        <h1 class="fw-bold mb-3">{{ servicio.nombre }}</h1>
+        <p class="lead text-body-secondary">{{ servicio.descripcion_corta }}</p>
+        <div class="mt-4">{{ servicio.descripcion|linebreaks }}</div>
+      </div>
+
+      <div class="col-lg-5">
+        {% if servicio.lista_beneficios %}
+        <div class="card bg-dark border-secondary-subtle mb-4">
+          <div class="card-body">
+            <h5 class="fw-bold mb-3">Beneficios</h5>
+            <ul class="list-unstyled mb-0">
+              {% for beneficio in servicio.lista_beneficios %}
+              <li class="mb-2">
+                <i class="bi bi-check-circle-fill text-warning me-2"></i>{{ beneficio }}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="card border-warning">
+          <div class="card-body text-center">
+            <h5 class="fw-bold">¿Te interesa este servicio?</h5>
+            <p class="small text-body-secondary">Cotización sin costo y sin compromiso.</p>
+            <a href="https://wa.me/56950978799?text=Hola%20SUNFILM,%20quiero%20cotizar%20{{ servicio.nombre|urlencode }}"
+               target="_blank" rel="noopener" class="btn btn-success w-100 mb-2">
+              <i class="bi bi-whatsapp me-1"></i> Cotizar por WhatsApp
+            </a>
+            <a href="tel:+56950978799" class="btn btn-outline-light w-100">
+              <i class="bi bi-telephone-fill me-1"></i> +56 9 5097 8799
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% if relacionados %}
+    <hr class="my-5 border-secondary-subtle">
+    <h4 class="fw-bold mb-4">Otros servicios de {{ servicio.categoria.nombre }}</h4>
+    <div class="row g-3">
+      {% for rel in relacionados %}
+      <div class="col-md-4">
+        <a href="{{ rel.get_absolute_url }}" class="text-decoration-none">
+          <div class="card bg-dark border-secondary-subtle h-100">
+            <div class="card-body">
+              <h6 class="fw-bold text-body-emphasis mb-1">{{ rel.nombre }}</h6>
+              <p class="small text-body-secondary mb-0">{{ rel.descripcion_corta|truncatechars:70 }}</p>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+  </div>
+</section>
+{% endblock %}
