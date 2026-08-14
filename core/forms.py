@@ -26,7 +26,7 @@ class CotizacionForm(forms.ModelForm):
             'servicio': forms.Select(attrs={'class': 'form-select'}),
             'mensaje': forms.Textarea(attrs={
                 'class': 'form-control', 'rows': 4,
-                'placeholder': 'Contanos qué necesitás: tipo de vehículo, m² aproximados, etc.'
+                'placeholder': 'Contanos qué necesitás: tipo de lámina, m² aproximados, ubicación, etc.'
             }),
         }
 
