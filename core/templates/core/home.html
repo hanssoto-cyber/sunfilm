@@ -40,7 +40,7 @@
   <div class="container">
     <div class="row g-4 text-center">
       {% for cat in categorias %}
-      <div class="col-md-4">
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:forloop.counter0 }}00">
         <a href="{% url 'servicios:lista' %}?categoria={{ cat.slug }}" class="text-decoration-none">
           <div class="card bg-dark border-secondary-subtle h-100 card-hover">
             <div class="card-body py-4">
@@ -64,7 +64,7 @@
     </div>
     <div class="row g-4">
       {% for servicio in destacados %}
-      <div class="col-md-6 col-lg-4">
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:forloop.counter0 }}00">
         <div class="card h-100 bg-dark border-secondary-subtle">
           {% if servicio.imagen %}
           <img src="{{ servicio.imagen.url }}" class="card-img-top object-fit-cover"
@@ -103,22 +103,22 @@
       <h2 class="fw-bold">¿Por qué elegir SUNFILM?</h2>
     </div>
     <div class="row g-4">
-      <div class="col-md-6 col-lg-3 text-center">
+      <div class="col-md-6 col-lg-3 text-center" data-aos="zoom-in" data-aos-delay="100">
         <i class="bi bi-patch-check-fill display-5 text-warning mb-3 d-block"></i>
         <h6 class="fw-bold">Instaladores certificados</h6>
         <p class="small text-body-secondary">Trabajo prolijo y garantizado, sin burbujas ni despegues.</p>
       </div>
-      <div class="col-md-6 col-lg-3 text-center">
+      <div class="col-md-6 col-lg-3 text-center" data-aos="zoom-in" data-aos-delay="200">
         <i class="bi bi-gem display-5 text-warning mb-3 d-block"></i>
         <h6 class="fw-bold">Materiales de calidad</h6>
         <p class="small text-body-secondary">Láminas de marcas reconocidas, no genéricas.</p>
       </div>
-      <div class="col-md-6 col-lg-3 text-center">
+      <div class="col-md-6 col-lg-3 text-center" data-aos="zoom-in" data-aos-delay="300">
         <i class="bi bi-house-gear-fill display-5 text-warning mb-3 d-block"></i>
         <h6 class="fw-bold">Vamos a tu domicilio</h6>
         <p class="small text-body-secondary">Instalamos en tu casa, oficina o local comercial.</p>
       </div>
-      <div class="col-md-6 col-lg-3 text-center">
+      <div class="col-md-6 col-lg-3 text-center" data-aos="zoom-in" data-aos-delay="400">
         <i class="bi bi-cash-coin display-5 text-warning mb-3 d-block"></i>
         <h6 class="fw-bold">Cotización sin costo</h6>
         <p class="small text-body-secondary">Evaluamos tu caso y te damos un precio claro, sin compromiso.</p>
@@ -136,7 +136,7 @@
     </div>
     <div class="row g-3">
       {% for trabajo in trabajos %}
-      <div class="col-6 col-md-3">
+      <div class="col-6 col-md-3" data-aos="fade-up">
         <a href="{% url 'galeria:lista' %}" class="d-block galeria-item">
           <img src="{{ trabajo.imagen.url }}" alt="{{ trabajo.texto_alt }}"
                class="img-fluid rounded-3 w-100" loading="lazy">
@@ -156,7 +156,7 @@
 
 <section class="py-5">
   <div class="container">
-    <div class="card border-warning">
+    <div class="card border-warning" data-aos="zoom-in">
       <div class="card-body text-center py-5">
         <h2 class="fw-bold mb-2">¿Listo para empezar?</h2>
         <p class="text-body-secondary mb-4">Contanos qué necesitás y te respondemos a la brevedad.</p>

@@ -1,22 +1,352 @@
+/* ============================================
+   SUNFILM — Tema de marca
+   ============================================ */
+
 :root {
     --sf-navy: #16256B;
+    --sf-navy-dark: #0F1A4D;
     --sf-cyan: #1BA8D4;
     --sf-teal: #2BB5C0;
     --sf-sun: #F5C518;
+    --sf-sun-dark: #D9AC0A;
+
+    --sf-bg: #0A0F1E;
+    --sf-surface: #111A33;
+    --sf-border: #22305C;
 }
+
+/* Override de variables de Bootstrap */
+[data-bs-theme="dark"] {
+    --bs-body-bg: var(--sf-bg);
+    --bs-body-color: #C8D2E8;
+    --bs-emphasis-color: #FFFFFF;
+    --bs-secondary-color: #8A97B8;
+    --bs-body-font-family: 'Inter', system-ui, sans-serif;
+
+    --bs-primary: var(--sf-cyan);
+    --bs-primary-rgb: 27, 168, 212;
+    --bs-warning: var(--sf-sun);
+    --bs-warning-rgb: 245, 197, 24;
+
+    --bs-border-color: var(--sf-border);
+    --bs-tertiary-bg: var(--sf-surface);
+    --bs-link-color: var(--sf-cyan);
+    --bs-link-hover-color: var(--sf-teal);
+}
+
+/* ============================================
+   TIPOGRAFÍA
+   ============================================ */
 
 body {
-    background-color: #0d1117;
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: var(--sf-bg);
 }
+
+h1, h2, h3, h4, h5, h6,
+.navbar-brand, .btn {
+    font-family: 'Montserrat', system-ui, sans-serif;
+    letter-spacing: -.02em;
+}
+
+h1, .display-3, .display-5 {
+    font-weight: 800;
+}
+
+.lead {
+    font-weight: 400;
+}
+
+/* ============================================
+   NAVBAR
+   ============================================ */
 
 .navbar {
-    background-color: rgba(22, 37, 107, 0.95);
-    backdrop-filter: blur(6px);
+    background-color: rgba(15, 26, 77, .92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--sf-border) !important;
+    padding-block: .65rem;
 }
 
-footer {
-    background-color: #0a0e14;
+.navbar .nav-link {
+    color: #C8D2E8;
+    font-weight: 500;
+    font-size: .95rem;
+    position: relative;
+    padding-inline: .9rem !important;
 }
+
+.navbar .nav-link:hover {
+    color: #FFFFFF;
+}
+
+.navbar .nav-link::after {
+    content: '';
+    position: absolute;
+    left: .9rem;
+    right: .9rem;
+    bottom: .25rem;
+    height: 2px;
+    background: var(--sf-sun);
+    transform: scaleX(0);
+    transition: transform .25s ease;
+}
+
+.navbar .nav-link:hover::after {
+    transform: scaleX(1);
+}
+
+.navbar-toggler {
+    border-color: var(--sf-border);
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 .2rem rgba(245, 197, 24, .3);
+}
+
+/* ============================================
+   BOTONES
+   ============================================ */
+
+.btn {
+    font-weight: 600;
+    border-radius: .5rem;
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.btn-warning {
+    background-color: var(--sf-sun);
+    border-color: var(--sf-sun);
+    color: var(--sf-navy-dark);
+}
+
+.btn-warning:hover,
+.btn-warning:focus {
+    background-color: var(--sf-sun-dark);
+    border-color: var(--sf-sun-dark);
+    color: var(--sf-navy-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(245, 197, 24, .28);
+}
+
+.btn-outline-warning {
+    color: var(--sf-sun);
+    border-color: var(--sf-sun);
+}
+
+.btn-outline-warning:hover {
+    background-color: var(--sf-sun);
+    border-color: var(--sf-sun);
+    color: var(--sf-navy-dark);
+}
+
+.btn-outline-light:hover {
+    color: var(--sf-navy-dark);
+}
+
+.btn-success {
+    background-color: #25D366;
+    border-color: #25D366;
+    color: #0A0F1E;
+}
+
+.btn-success:hover {
+    background-color: #1EBE5A;
+    border-color: #1EBE5A;
+    color: #0A0F1E;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(37, 211, 102, .28);
+}
+
+.btn-lg {
+    padding: .8rem 1.75rem;
+}
+
+/* ============================================
+   CARDS
+   ============================================ */
+
+.card {
+    background-color: var(--sf-surface) !important;
+    border-color: var(--sf-border) !important;
+    border-radius: .75rem;
+    overflow: hidden;
+}
+
+.card.border-warning {
+    border-color: var(--sf-sun) !important;
+    background: linear-gradient(135deg, rgba(245, 197, 24, .07), rgba(27, 168, 212, .05)) !important;
+}
+
+.card-hover,
+.card.bg-dark {
+    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+.card-hover:hover,
+.card.bg-dark:hover {
+    transform: translateY(-6px);
+    border-color: var(--sf-sun) !important;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .5);
+}
+
+/* ============================================
+   BADGES
+   ============================================ */
+
+.badge.text-bg-primary {
+    background-color: rgba(27, 168, 212, .18) !important;
+    color: var(--sf-cyan) !important;
+    border: 1px solid rgba(27, 168, 212, .35);
+    font-weight: 600;
+}
+
+.badge.text-bg-warning {
+    background-color: var(--sf-sun) !important;
+    color: var(--sf-navy-dark) !important;
+    font-weight: 700;
+}
+
+/* ============================================
+   HERO
+   ============================================ */
+
+.hero-sunfilm {
+    min-height: 76vh;
+    position: relative;
+    background:
+        radial-gradient(ellipse at 15% 25%, rgba(27, 168, 212, .22), transparent 55%),
+        radial-gradient(ellipse at 85% 75%, rgba(22, 37, 107, .6), transparent 55%),
+        var(--sf-bg);
+}
+
+.hero-sunfilm::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(34, 48, 92, .35) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34, 48, 92, .35) 1px, transparent 1px);
+    background-size: 46px 46px;
+    mask-image: radial-gradient(ellipse at center, #000 20%, transparent 72%);
+    pointer-events: none;
+}
+
+.hero-sunfilm > .container {
+    position: relative;
+    z-index: 1;
+}
+
+/* ============================================
+   FORMULARIOS
+   ============================================ */
+
+.form-control,
+.form-select {
+    background-color: var(--sf-bg);
+    border-color: var(--sf-border);
+    color: #E6ECF8;
+    border-radius: .5rem;
+    padding: .7rem .9rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--sf-bg);
+    border-color: var(--sf-cyan);
+    color: #E6ECF8;
+    box-shadow: 0 0 0 .2rem rgba(27, 168, 212, .22);
+}
+
+.form-control::placeholder {
+    color: #5F6C8C;
+}
+
+.form-label {
+    font-weight: 600;
+    font-size: .9rem;
+    color: #C8D2E8;
+}
+
+/* ============================================
+   GALERÍA
+   ============================================ */
+
+.galeria-item {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: .75rem;
+    display: block;
+}
+
+.galeria-item img {
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    transition: transform .4s ease;
+    width: 100%;
+}
+
+.galeria-item:hover img {
+    transform: scale(1.08);
+}
+
+.galeria-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to top, rgba(22, 37, 107, .92), rgba(10, 15, 30, .3));
+    color: #FFFFFF;
+    opacity: 0;
+    transition: opacity .3s ease;
+}
+
+.galeria-item:hover .galeria-overlay {
+    opacity: 1;
+}
+
+/* ============================================
+   BLOG
+   ============================================ */
+
+.post-contenido {
+    font-size: 1.075rem;
+    line-height: 1.85;
+    color: #C8D2E8;
+}
+
+.post-contenido p {
+    margin-bottom: 1.4rem;
+}
+
+.post-contenido h2,
+.post-contenido h3 {
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-top: 2.4rem;
+    margin-bottom: 1rem;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+footer {
+    background-color: #070B16;
+    border-top: 1px solid var(--sf-border) !important;
+}
+
+footer h5,
+footer h6 {
+    color: #FFFFFF;
+}
+
+/* ============================================
+   BOTÓN WHATSAPP FLOTANTE
+   ============================================ */
 
 .btn-whatsapp {
     position: fixed;
@@ -27,83 +357,97 @@ footer {
     height: 58px;
     border-radius: 50%;
     background-color: #25D366;
-    color: #fff;
+    color: #FFFFFF;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.75rem;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, .45);
+    box-shadow: 0 4px 20px rgba(37, 211, 102, .45);
     transition: transform .2s ease;
 }
 
 .btn-whatsapp:hover {
-    color: #fff;
-    transform: scale(1.08);
+    color: #FFFFFF;
+    transform: scale(1.1);
 }
 
-.hero-sunfilm {
-    min-height: 72vh;
-    background:
-        radial-gradient(circle at 20% 20%, rgba(27, 168, 212, .18), transparent 55%),
-        radial-gradient(circle at 80% 80%, rgba(22, 37, 107, .45), transparent 55%),
-        #0d1117;
+/* ============================================
+   PAGINACIÓN
+   ============================================ */
+
+.page-link {
+    background-color: var(--sf-surface) !important;
+    border-color: var(--sf-border) !important;
+    color: #C8D2E8;
 }
 
-.card-hover {
-    transition: transform .2s ease, border-color .2s ease;
+.page-link:hover {
+    background-color: var(--sf-navy) !important;
+    color: #FFFFFF;
 }
 
-.card-hover:hover {
-    transform: translateY(-4px);
-    border-color: var(--sf-sun) !important;
+/* ============================================
+   BREADCRUMB
+   ============================================ */
+
+.breadcrumb-item + .breadcrumb-item::before {
+    color: #5F6C8C;
 }
 
-.galeria-item {
-    position: relative;
-    cursor: pointer;
-    overflow: hidden;
-    border-radius: .5rem;
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+
+::-webkit-scrollbar {
+    width: 10px;
 }
 
-.galeria-item img {
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    transition: transform .35s ease;
+::-webkit-scrollbar-track {
+    background: var(--sf-bg);
 }
 
-.galeria-item:hover img {
-    transform: scale(1.07);
+::-webkit-scrollbar-thumb {
+    background: var(--sf-border);
+    border-radius: 5px;
 }
 
-.galeria-overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(to top, rgba(22, 37, 107, .88), rgba(13, 17, 23, .25));
-    color: #fff;
-    opacity: 0;
-    transition: opacity .3s ease;
+::-webkit-scrollbar-thumb:hover {
+    background: var(--sf-cyan);
 }
 
-.galeria-item:hover .galeria-overlay {
-    opacity: 1;
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        background-color: var(--sf-navy-dark);
+        margin-top: .75rem;
+        padding: 1rem;
+        border-radius: .5rem;
+        border: 1px solid var(--sf-border);
+    }
+
+    .navbar .nav-link::after {
+        display: none;
+    }
 }
 
-.post-contenido {
-    font-size: 1.075rem;
-    line-height: 1.8;
-}
+@media (max-width: 767.98px) {
+    .hero-sunfilm {
+        min-height: auto;
+        padding-block: 3rem;
+    }
 
-.post-contenido p {
-    margin-bottom: 1.35rem;
-}
+    h1, .display-3 {
+        font-size: 2.4rem;
+    }
 
-.post-contenido h2,
-.post-contenido h3 {
-    font-weight: 700;
-    margin-top: 2.25rem;
-    margin-bottom: 1rem;
+    .btn-whatsapp {
+        bottom: 16px;
+        right: 16px;
+        width: 52px;
+        height: 52px;
+        font-size: 1.5rem;
+    }
 }
