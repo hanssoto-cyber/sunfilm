@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from core.utils import optimizar_imagen
 
 
 class Categoria(models.Model):
@@ -57,3 +58,14 @@ class Servicio(models.Model):
     @property
     def lista_beneficios(self):
         return [b.strip() for b in self.beneficios.splitlines() if b.strip()]
+    
+    def save(self, *args, **kwargs):
+        if self.imagen and hasattr(self.imagen, 'file'):
+            # Solo optimiza si es una imagen nueva sin procesar
+            try:
+                nombre = self.imagen.name
+                optimizada = optimizar_imagen(self.imagen)
+                self.imagen.save(nombre, optimizada, save=False)
+            except Exception:
+                pass  # si falla la optimización, guarda la original
+        super().save(*args, **kwargs)

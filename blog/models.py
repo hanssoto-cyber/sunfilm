@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
+from core.utils import optimizar_imagen
 
 
 class CategoriaPost(models.Model):
@@ -82,3 +83,13 @@ class Post(models.Model):
     @property
     def texto_alt(self):
         return self.alt or self.titulo
+
+    def save(self, *args, **kwargs):
+        if self.imagen and hasattr(self.imagen, 'file'):
+            try:
+                nombre = self.imagen.name
+                optimizada = optimizar_imagen(self.imagen)
+                self.imagen.save(nombre, optimizada, save=False)
+            except Exception:
+                pass
+        super().save(*args, **kwargs)

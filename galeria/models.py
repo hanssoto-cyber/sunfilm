@@ -1,4 +1,5 @@
 from django.db import models
+from core.utils import optimizar_imagen
 
 
 class Trabajo(models.Model):
@@ -38,3 +39,13 @@ class Trabajo(models.Model):
     @property
     def texto_alt(self):
         return self.alt or self.titulo
+
+    def save(self, *args, **kwargs):
+        if self.imagen and hasattr(self.imagen, 'file'):
+            try:
+                nombre = self.imagen.name
+                optimizada = optimizar_imagen(self.imagen)
+                self.imagen.save(nombre, optimizada, save=False)
+            except Exception:
+                pass
+        super().save(*args, **kwargs)
