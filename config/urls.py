@@ -5,6 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from core.sitemaps import EstaticoSitemap, ServicioSitemap, PostSitemap
+from core.views import robots_txt
 
 sitemaps = {
     'estaticas': EstaticoSitemap,
@@ -19,6 +20,7 @@ urlpatterns = [
     path('servicios/', include('servicios.urls')),
     path('galeria/', include('galeria.urls')),
     path('tips/', include('blog.urls')),
+    path('robots.txt', robots_txt, name='robots_txt'),
     path('', include('core.urls')),
 ]
 
